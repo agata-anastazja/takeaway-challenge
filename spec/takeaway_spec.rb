@@ -1,10 +1,14 @@
 require 'takeaway'
 
 describe TakeAway do
-  let(:order_ex) {double :order}
-  before(:each) {allow(order_ex).to receive(:new).with("my_order")}
+  let(:checkout) {double :checkout}
 
-  subject(:takeaway) {described_class.new(order_ex)}
+  before {allow(checkout).to receive(:new)}
+  before { allow(checkout).to receive(:confirm) }
+
+
+
+  subject(:takeaway) {described_class.new(checkout)}
 
 
 
@@ -28,6 +32,16 @@ describe TakeAway do
 
   end
 
+    it "should send a text when we place the order" do
 
+      allow(takeaway).to receive(:confirm_order)
+      allow(takeaway).to receive(:confirmation_text).and_return("Message sent")
+      expect(takeaway.place_order).to eq "Message sent"
+    end
 
+    it "confirms the total and content of the order" do
+      takeaway.add(:burger, 2)
+      allow(checkout).to receive(:confirm).and_return(20)
+      expect(takeaway.confirm_order).to eq 20
+    end
 end

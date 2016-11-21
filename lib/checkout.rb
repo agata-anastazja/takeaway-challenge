@@ -1,6 +1,6 @@
 require './lib/takeaway'
 
-class Order
+class Checkout
 
   def initialize(my_order)
     @my_order = my_order

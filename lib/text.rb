@@ -1,11 +1,11 @@
 require 'twilio-ruby'
 require 'dotenv'
-Dotenv.load
+
 
 class Text
 
-
   def initialize
+    Dotenv.load
     account_sid = ENV['SID']
     auth_token = ENV['AUTH']
     @client = Twilio::REST::Client.new account_sid, auth_token
